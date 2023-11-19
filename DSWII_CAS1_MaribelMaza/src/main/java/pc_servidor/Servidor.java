@@ -1,0 +1,44 @@
+package pc_servidor;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
+
+public class Servidor {
+	
+	public static void main(String[] args) throws ClassNotFoundException {
+
+
+		try {
+			// Puerto
+			ServerSocket servidor = new ServerSocket(4780);
+			// Emitimos un mensaje por consola
+			System.out.println("Servidor a la escucha de las peticiones");
+			//cliente, aceptamos la peticion del cliente
+			Socket clienteservidor = servidor.accept();
+			ObjectInputStream recibir = new ObjectInputStream(clienteservidor.getInputStream());;
+			// Imprimimos el mensaje de exito
+			System.out.println("Mensaje llegado con exito");
+			
+			// Almacenamos el mensaje en variable de tipo String
+			String mensaje = (String) recibir.readObject();
+			// imprimimos el msj del cliente por pantalla
+			System.out.println("Mensaje desde el cliente " + mensaje);
+			// Salida desde el servidor
+			ObjectOutputStream enviar= new ObjectOutputStream(clienteservidor.getOutputStream());
+			enviar.writeObject("Hola Cliente, ese año, el presidente del Peru fue Manuel Ignacio de Vivanco Iturralde ");
+			
+			//cerramos
+			clienteservidor.close();
+			servidor.close();
+			
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	} 
+
+}
