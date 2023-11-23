@@ -1,0 +1,38 @@
+package DataJson;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+public class ClassConvertirJSONProductos {
+
+	public static void main(String[] args) {
+		// instanciamos
+		ClassProducto clprod = new ClassProducto();
+		//asignamos valores
+		clprod.setIdproducto(100);
+		clprod.setNombre("naranjass");
+		clprod.setDescriproducto("vitamina C");
+		clprod.setCantidad(100);
+		clprod.setNrolote(7897);
+		clprod.setCodbarras(777789999);
+		
+		// Primera forma de serializar :
+		Gson primfor = new Gson();
+		// Aplicamos el metodo toJson() para convertir los objetos en data Json :
+		String datosjson = primfor.toJson(clprod);
+		// imprmimos mensaje y datos por consola
+		System.out.println("************** Primera forma");
+		System.out.println(datosjson);
+		
+		
+		// Segunda Forma Gson Builder
+		Gson segundafor = new GsonBuilder().setPrettyPrinting().create();
+		// almacenamos la data en una variable string..
+		String datosjsondos = segundafor.toJson(clprod);
+		// imprmimos mensaje y datos por consola
+				System.out.println("************** Segunda forma");
+				System.out.println(datosjsondos);
+		
+	}
+
+}

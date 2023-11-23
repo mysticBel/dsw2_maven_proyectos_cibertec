@@ -1,0 +1,11 @@
+package DataJson;
+
+public class ClassProducto {
+	
+	private int idproducto;
+	private String nombre;
+	private String descriproducto;
+	private int cantidad;
+	private int nrolote;
+	private int cidbarrras;
+}
