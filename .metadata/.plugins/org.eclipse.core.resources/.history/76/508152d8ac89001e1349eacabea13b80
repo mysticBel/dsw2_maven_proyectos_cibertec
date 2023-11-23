@@ -1,0 +1,35 @@
+package DataJson;
+
+import java.io.IOException;
+import java.io.Reader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+import com.google.gson.Gson;
+
+public class ClassLeerJSONMascota {
+
+	public static void main(String[] args) {
+		// Ubicamos la ruta del archivo que va a ser leido
+		
+		String ruta= "D:/archivoJson/mascota.json";
+		
+		
+		try {
+			// Recuperamos la ruta para ser leido el archivo json...
+			Reader lectura = Files.newBufferedReader(Paths.get(ruta));
+			// instanciamos la clase GSON...
+			Gson leer = new Gson();
+			
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+
+	} // fin del metodo principal
+
+} // fin clase ller

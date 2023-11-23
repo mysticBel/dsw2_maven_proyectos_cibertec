@@ -1,0 +1,19 @@
+package DataJson;
+
+public class TestConvertirJSONmascota {
+
+	public static void main(String[] args) {
+		// instanciamos la respectiva clase
+		ClassMascota clmas = new ClassMascota();
+		// Asignamos valores
+		clmas.setIdmascota(100);
+		clmas.setNommascota("Boby");
+		clmas.setRaza("Pastor Aleman");
+		clmas.setColor("Negro");
+		clmas.setVacuna("5");
+		clmas.setEdad("5");
+		clmas.setPeso("7");
+
+	}
+
+}

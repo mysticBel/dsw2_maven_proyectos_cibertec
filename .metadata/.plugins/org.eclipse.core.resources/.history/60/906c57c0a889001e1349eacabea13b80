@@ -1,0 +1,40 @@
+package DataJson;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+public class TestConvertirJSONmascota {
+
+	public static void main(String[] args) {
+		// instanciamos la respectiva clase
+		ClassMascota clmas = new ClassMascota();
+		// Asignamos valores
+		clmas.setIdmascota(100);
+		clmas.setNommascota("Boby");
+		clmas.setRaza("Pastor Aleman");
+		clmas.setColor("Negro");
+		clmas.setVacuna("5");
+		clmas.setEdad("5");
+		clmas.setPeso("7kg");
+
+		//HAY DOS FORMAS DE SERIALIZAR
+		
+		// 1. Primera Forma
+		Gson gsonmascota = new Gson();
+			//aplicamos el metodo "TOJSON"
+		String datosmascota = gsonmascota.toJson(clmas);
+		//imprimimos ´pr consola
+		System.out.println(datosmascota);
+		
+		
+		// 2. Segunda Forma
+		Gson gsonmascotaBuilder = new GsonBuilder().setPrettyPrinting().create();
+		//almacenamos los valores en una variable de tipo string
+		String datosmascotaBuilder = gsonmascotaBuilder.toJson(clmas);
+		//imprimimos ´pr consola
+		System.out.println(datosmascotaBuilder);
+				
+		
+	} // fin del metodo principal
+
+}// fin de clase test

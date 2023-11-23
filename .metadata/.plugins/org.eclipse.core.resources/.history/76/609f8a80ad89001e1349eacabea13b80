@@ -1,0 +1,81 @@
+package SocketsHilos;
+
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+
+public class ServidorArchivos  extends Thread{
+	//declaramos variables...
+	private int puerto;
+	private boolean parar=false;
+	
+	//constructor....
+	public ServidorArchivos(int puer){
+		this.puerto=puer;
+ 	}   //fin del constructor...
+	
+	//setter y getter...
+	public int getPuerto() {
+		return puerto;
+	}
+
+	public void setPuerto(int puerto) {
+		this.puerto = puerto;
+	}
+	
+	//creamos un metodo 
+	public void PararServidor(){
+		this.parar=true;
+	}  //fin del servidor
+	
+	@Override
+	public void run(){
+		ServerSocket  servidor=null;
+		//ponemos el servidor a la escucha...
+		try {
+			servidor=new ServerSocket(this.puerto);
+			//emitimos mensaje por consola...
+			System.out.println("esperando peticiones en el puerto "+this.puerto);
+			//aplicamos un bucle...
+			//mientras que no llamemos al metodo parar,recibimos clientes y creamos hilos para cada cliente...
+			while(!parar){
+				//aceptamos una conexion externa...
+				Socket nuevocliente=servidor.accept();
+				//intanciamos el hilo del cliente o aplicamos el estado uno...
+				
+				//aplicamos el estado dos (ejecucion)
+				
+				
+			} //fin del bucle...
+			//cerramos el servidor despues de salir del bucle...
+			servidor.close();
+			//emitimos un mensaje por pantalla
+			System.out.println("servidor cerrado correctamente");	
+			
+		} catch (IOException e) {
+			//emitimos mensaje por pantalla
+			System.out.println("Servidor cerrado por errores");
+			e.printStackTrace();
+		} finally{
+			//cerramos el servidor si se ha invocado al metodo parar
+			//para liberar recursos...
+			//aplicamos una condicion...
+			if(servidor!=null){
+				
+				try {
+					servidor.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}   //fin del catch...
+			}  //fin del if...
+			
+			
+					}   //fin del finally....
+		
+		
+	}  //fin del metodo run...
+
+	
+
+}   //fin de la clase servidor....

@@ -1,0 +1,106 @@
+package SocketsHilos;
+
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.net.Socket;
+
+public class ClassThreadCliente  extends Thread{
+	//declaramos las respectivas variables...
+	private Socket cliente=null;
+	private DataOutputStream dos=null;
+	private DataInputStream dis=null;
+	private boolean  parar=false;
+	private static final  int BUFFER_SIZE=8194;
+	
+	//creamos el constructor...
+	
+	public ClassThreadCliente(Socket cli){
+		this.cliente=cli;
+		
+	}    //fin del constructor...
+	
+	
+	//*****************metodo run....
+	@Override
+	public void run(){
+		//obtenemos los flujos...
+		try {
+			dos=new DataOutputStream(this.cliente.getOutputStream());
+			dis=new DataInputStream(this.cliente.getInputStream());
+			//creamos un buffer...
+			byte[] data=new byte[BUFFER_SIZE];
+			//aplicamos un bucle...
+			while(!parar){	
+				//leer el archivo que el servidor debe enviar..
+				String strFichero=dis.readUTF();
+				//imprimimos mensaje por pantalla
+			System.out.println(" el cliente "+this.cliente.getLocalAddress()+" ha solicitado el  archivo: "+strFichero);
+			//obtenemos la propieadades del fichero a  obtener...
+			File ffichero=new File("C:\\Users\\JORGE 2022\\Desktop\\Servidor\\"+strFichero);
+			//comprobamos si el archivo existe...
+			//aplicamos una condicion...
+			if(ffichero.exists()){
+				long filezise=ffichero.length();
+				int bytesleidos;
+				//enviamos el tamaño del fichero...
+				dos.writeLong(filezise);
+				//aplicamos un stream...
+				DataInputStream disfichero=new DataInputStream(new FileInputStream(ffichero));
+				
+				//aplicamos un bucle...
+				while((bytesleidos=disfichero.read(data,0,BUFFER_SIZE))>0){
+					
+					//enviamos los bytes que hemos leido
+					dos.write(data,0,bytesleidos);
+					
+				}   //fin del bucle...
+				//emitimos mensaje por consola
+				System.out.println("fichero enviado correctamente");
+				//cerramos el flujo de lectura del fichero..
+				disfichero.close();
+				
+			}  else {
+				//el fichero no existe , enviamos -1 para informar al cliente..
+				dos.writeLong(-1);
+			} //fin de la condicion...
+				
+			}  //fin del bucle while...
+			
+			
+		} catch (IOException e) {
+			//enviamos un mensaje en caso de error..
+			System.out.println("conexion con el cliente "+cliente.getRemoteSocketAddress()+ "cerrada");
+			e.printStackTrace();
+		}  finally {  //fin del catch...
+		//emitimos un mensaje por consola
+			System.out.println("hilo finalizado");
+		}  //fin del finally
+	}   //fin del metodo run...
+	
+	//creamos el metodo parar
+	public void parar(){
+		parar=true;
+			try {
+				//aplicamos varias  condiciones
+				if(dos!=null){
+				dos.close();
+				}  //fin del if...
+				if(dis!=null){
+					dis.close();			
+				}  //fin del if..
+				if(cliente!=null){
+					cliente.close();
+				}
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}   //fin del catch....
+	
+		
+	}  //fin del metodo parar...
+
+}   //fin de class....
